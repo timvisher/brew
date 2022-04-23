@@ -15,7 +15,7 @@ module Homebrew
     def check_style_and_print(files, **options)
       success = check_style_impl(files, :print, **options)
 
-      if ENV["GITHUB_ACTIONS"] && !success
+      if ENV["GITHUB_ACTIONS"].present? && !success
         check_style_json(files, **options).each do |path, offenses|
           offenses.each do |o|
             line = o.location.line
@@ -149,7 +149,7 @@ module Homebrew
 
         # Don't show the default formatter's progress dots
         # on CI or if only checking a single file.
-        args << "--format" << "clang" if ENV["CI"] || files.count { |f| !f.directory? } == 1
+        args << "--format" << "clang" if ENV["CI"].present? || files.count { |f| !f.directory? } == 1
 
         args << "--color" if Tty.color?
 

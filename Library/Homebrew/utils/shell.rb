@@ -52,7 +52,7 @@ module Utils
         bash_profile = "#{ENV["HOME"]}/.bash_profile"
         return bash_profile if File.exist? bash_profile
       when :zsh
-        return "#{ENV["ZDOTDIR"]}/.zshrc" if ENV["ZDOTDIR"].present?
+        return "#{ENV.fetch("ZDOTDIR")}/.zshrc" if ENV["ZDOTDIR"].present?
       end
 
       SHELL_PROFILE_MAP.fetch(preferred, "~/.profile")

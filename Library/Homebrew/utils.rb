@@ -281,7 +281,7 @@ module Kernel
       ENV["HOMEBREW_DEBUG_INSTALL"] = f.full_name
     end
 
-    if ENV["SHELL"].include?("zsh") && (home = ENV["HOME"])&.start_with?(HOMEBREW_TEMP.resolved_path.to_s)
+    if ENV["SHELL"].include?("zsh") && (home = ENV.fetch("HOME", nil))&.start_with?(HOMEBREW_TEMP.resolved_path.to_s)
       FileUtils.mkdir_p home
       FileUtils.touch "#{home}/.zshrc"
     end
@@ -377,7 +377,7 @@ module Kernel
 
     ENV["DISPLAY"] = Homebrew::EnvConfig.display
 
-    with_env(DBUS_SESSION_BUS_ADDRESS: ENV["HOMEBREW_DBUS_SESSION_BUS_ADDRESS"]) do
+    with_env(DBUS_SESSION_BUS_ADDRESS: ENV.fetch("HOMEBREW_DBUS_SESSION_BUS_ADDRESS", nil)) do
       safe_system(browser, *args)
     end
   end

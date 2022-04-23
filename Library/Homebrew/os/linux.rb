@@ -48,7 +48,7 @@ module OS
     end
 
     def languages
-      @languages ||= Array(ENV["LANG"]&.slice(/[a-z]+/)).uniq
+      @languages ||= Array(ENV.fetch("LANG", nil)&.slice(/[a-z]+/)).uniq
     end
 
     def language
